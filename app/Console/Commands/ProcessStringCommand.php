@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Interfaces\ProcessStringInterface;
 use App\Services\ProcessStringService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class ProcessStringCommand extends Command
 {
@@ -40,17 +41,22 @@ class ProcessStringCommand extends Command
     public function handle()
     {
         $string = $this->argument('string');
-        if(empty($string)){
+        if (empty($string)) {
             $this->error('String required');
             return Command::INVALID;
         }
 
-        /** @var ProcessStringService $processStringService */
-        $processStringService = app()->make(ProcessStringInterface::class);
-        $messages = $processStringService->processString($string);
-        foreach ($messages as $message){
-            $this->line($message);
+        try {
+            /** @var ProcessStringService $processStringService */
+            $processStringService = app()->make(ProcessStringInterface::class);
+            $messages = $processStringService->processString($string);
+            foreach ($messages as $message) {
+                $this->line($message);
+            }
+            return Command::SUCCESS;
+        } catch (\Exception $e) {
+            Log::error($e);
+            return Command::FAILURE;
         }
-        return Command::SUCCESS;
     }
 }
