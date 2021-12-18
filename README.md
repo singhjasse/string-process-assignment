@@ -35,6 +35,7 @@ For test case exection, please run following command :
  - Console command is created in app/Console/Commands folder.
  - Interfaces are created in app/Interfaces folder.
  - Services are created in app/Services folder.
+ - Two traits are created for string conversion from lower to upper &  upper to lower
  - Test cases are created at the root folder in tests/Features & tests/Unit.  
 ## Steps to install & execute
 
