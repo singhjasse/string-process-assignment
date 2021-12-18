@@ -40,7 +40,7 @@ class ProcessStringCommand extends Command
      */
     public function handle()
     {
-        $string = $this->argument('string');
+        $string = trim($this->argument('string'));
         if (empty($string)) {
             $this->error('String required');
             return Command::INVALID;
